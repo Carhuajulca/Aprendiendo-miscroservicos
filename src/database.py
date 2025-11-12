@@ -1,10 +1,22 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 from contextlib import contextmanager
+from dotenv import load_dotenv
+import os
+
+# 🔹 Cargar variables de entorno
+load_dotenv()
+
+# 🔹 Obtener variables de entorno
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_HOST = os.getenv("DB_HOST")
+DB_PORT = os.getenv("DB_PORT")
+DB_NAME = os.getenv("DB_NAME")
 
 
 # 🔹 Puedes cambiar la URL a tu BD (MySQL, PostgreSQL, etc.)
-DATABASE_URL = "postgresql://prueba:prueba123@localhost:5432/PRUEBA"  # más simple para comenzar
+DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"  # más simple para comenzar
 
 
 # 🔹 Crear el motor de conexión

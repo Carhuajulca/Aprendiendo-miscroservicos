@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from src.user.schemas.UserSchemas import UserCreate, UserResponse
 from src.user.services.UserServices import UserService
-from src.DataBase import get_db
+from src.database import get_db
 
 user_router = APIRouter()
 service = UserService()
@@ -33,4 +33,6 @@ def actualizar_usuario(user_id: int, usuario:UserCreate, db:Session = Depends(ge
 @user_router.delete("/{usuario_id}", status_code=204)
 def eliminar_usuario(usuario_id:int, db:Session =Depends(get_db)):
     service.eliminar_usuairo(usuario_id,db)
+
+
     

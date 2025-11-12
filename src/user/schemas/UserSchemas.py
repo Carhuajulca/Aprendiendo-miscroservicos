@@ -6,7 +6,7 @@ class UserCreate(BaseModel):
     nombre: str
     email: EmailStr
     edad: int
-    password: str
+    password_hash: str
 
     @field_validator("edad")
     def validar_edad(cls, v): # cls → es una referencia a la clase del modelo (como en los métodos de clase en Python).
@@ -19,7 +19,7 @@ class Usuario_Actualizado(BaseModel):
     nombre: Optional[str] = None
     email: Optional[EmailStr] = None
     edad: Optional[int] = None
-    password: Optional[str] = None
+    password_hash: Optional[str] = None
 
 
 
