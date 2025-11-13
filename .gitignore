@@ -17,7 +17,7 @@ ENV/
 
 # Archivos de entorno
 .env
-.env.*
+
 Pipfile.lock
 
 # Archivos de configuración de VS Code
@@ -26,3 +26,7 @@ Pipfile.lock
 # Archivos temporales del sistema operativo
 .DS_Store
 Thumbs.db
+
+# --- Alembic ---
+alembic/versions/*.pyc
+alembic/__pycache__/

@@ -3,6 +3,7 @@ from src.user.routers.UserRouter import  user_router
 from src.auth.routers.auth_router import auth_router
 from src.database import Base, engine
 
+
 # Crear las tablas automáticamente
 Base.metadata.create_all(bind=engine)
 

@@ -21,8 +21,9 @@ if database_url:
 
 # --- IMPORTA TUS MODELOS AQUÍ ---
 # por ejemplo:
-from src.DataBase import Base         # si usas SQLAlchemy declarative Base
+from src.database import Base         # si usas SQLAlchemy declarative Base
 from src.user.models.UserModel import User         # importa las clases de model
+from src.auth.models import * 
 # o para SQLModel:
 # from sqlmodel import SQLModel
 # from myapp.models import *  # asegúrate de que MyModel está importado
