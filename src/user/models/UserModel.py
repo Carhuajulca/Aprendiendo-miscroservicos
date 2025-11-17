@@ -2,6 +2,7 @@
 from sqlalchemy import Column, Integer, String, DateTime, func
 from src.database import Base
 from sqlalchemy.orm import relationship
+from src.auth.models.user_role_model import users_roles
 
 class User(Base):
     __tablename__ = "users"
@@ -18,6 +19,6 @@ class User(Base):
 
     roles = relationship(
     "Role",
-    secondary="users_roles",
+    secondary=users_roles,
     back_populates="users"
 )

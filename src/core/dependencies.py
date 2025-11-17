@@ -6,18 +6,13 @@ from src.user.models.UserModel import User
 from src.database import get_db
 from sqlalchemy.orm import Session
 
-# Ruta del login para obtener el token
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 def obtener_usuario_actual(
     token: str = Depends(oauth2_scheme),
     db: Session = Depends(get_db)
 ):
-    """
-    Valida el token JWT y obtiene el usuario autenticado.
-    """
     try:
-        # Decodifica el token JWT
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         user_id: str = payload.get("sub")
 
@@ -33,7 +28,6 @@ def obtener_usuario_actual(
             detail="Token inválido o expirado"
         )
 
-    # Busca el usuario en la base de datos
     usuario = db.query(User).filter(User.id == user_id).first()
     if usuario is None:
         raise HTTPException(
@@ -42,3 +36,43 @@ def obtener_usuario_actual(
         )
 
     return usuario
+
+# =====================================================
+#   VERIFICAR PERMISOS (RBAC)
+# =====================================================
+def require_permission(permission_name: str):
+    """
+    Dependencia para verificar si el usuario tiene un permiso específico.
+    """
+
+    def wrapper(current_user: User = Depends(obtener_usuario_actual)):
+
+        # Extraer permisos del usuario
+        user_permissions = {
+            perm.name
+            for role in (current_user.roles or [])
+            for perm in (role.permissions or [])
+        }
+
+        if permission_name not in user_permissions:
+            raise HTTPException(
+                status_code=403,
+                detail=f"No tienes el permiso requerido: {permission_name}"
+            )
+
+        return current_user  # 🔥 IMPORTANTE
+
+    return wrapper
+
+
+# El archivo dependency.py es un guardian de acceso.
+
+# Este archivo se encarga de:
+
+# 1️⃣ Recibir el token del cliente
+# 2️⃣ Verificar si el token es válido
+# 3️⃣ Verificar si no expiró
+# 4️⃣ Leer el ID del usuario dentro del token
+# 5️⃣ Buscar al usuario real en la base de datos
+# 6️⃣ Retornar ese usuario
+# 7️⃣ Bloquear acceso si algo falla

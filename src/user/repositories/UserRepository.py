@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from src.user.models.UserModel import User
 from src.user.schemas.UserSchemas import UserCreate
-from src.core.dependencies import obtener_usuario_actual
 
 
 class UserRepository:

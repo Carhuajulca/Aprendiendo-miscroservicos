@@ -4,7 +4,6 @@ from sqlalchemy.orm import Session
 from src.user.schemas.UserSchemas import UserCreate, UserResponse
 from src.user.services.UserServices import UserService
 from src.database import get_db
-from src.user.models.UserModel import User
 
 user_router = APIRouter()
 service = UserService()

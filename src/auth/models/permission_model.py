@@ -1,7 +1,8 @@
-# src/auth/models/PermissionModel.py
+# src/auth/models/permission_model.py
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from src.database import Base
+from src.auth.models.role_permission_model import roles_permissions
 
 # Representa cada acción permitida.
 class Permission(Base):
@@ -13,6 +14,6 @@ class Permission(Base):
 
     roles = relationship(
         "Role",
-        secondary="roles_permissions",
+        secondary=roles_permissions,
         back_populates="permissions"
     )

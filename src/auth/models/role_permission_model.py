@@ -1,11 +1,10 @@
-# src/auth/models/RolePermissionModel.py
-from sqlalchemy import Column, Integer, ForeignKey
+# src/auth/models/role_permission_model.py
+from sqlalchemy import Table, Column, Integer, ForeignKey
 from src.database import Base
 
-
-# Relaciona M:N → un rol tiene muchos permisos, un permiso pertenece a muchos roles.
-class RolePermission(Base):
-    __tablename__ = "roles_permissions"
-
-    role_id = Column(Integer, ForeignKey("roles.id"), primary_key=True)
-    permission_id = Column(Integer, ForeignKey("permissions.id"), primary_key=True)
+roles_permissions = Table(
+    "roles_permissions",
+    Base.metadata,
+    Column("role_id", Integer, ForeignKey("roles.id"), primary_key=True),
+    Column("permission_id", Integer, ForeignKey("permissions.id"), primary_key=True),
+)

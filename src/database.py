@@ -2,6 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 from contextlib import contextmanager
 from dotenv import load_dotenv
+from sqlalchemy.orm import DeclarativeBase
 import os
 
 # 🔹 Cargar variables de entorno
@@ -26,7 +27,9 @@ engine = create_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # 🔹 Clase base de los modelos
-Base = declarative_base()
+class Base(DeclarativeBase):
+    pass
+# Base = declarative_base()
 
 # 🔹 Dependencia para obtener la sesión en los endpoints o servicios
 def get_db():
